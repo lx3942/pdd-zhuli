@@ -1,0 +1,2 @@
+# pdd-zhuli
+static page
