@@ -1,0 +1,714 @@
+/* ============================================================
+   一枚小惊喜 · 样式
+   配色：暖象牙底 + 白纸 + 克制的红
+   ============================================================ */
+
+:root {
+  --paper: #FBF7F1;
+  --card: #FFFFFF;
+  --ink: #2C2723;
+  --ink-body: #332E29;
+  --ink-soft: #5E564F;
+  --ink-mute: #8B8179;
+  --line: #EDE5DA;
+  --red: #D2402E;
+  --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 演出期间锁住滚动，别让页面乱跑 */
+html.lock,
+html.lock body {
+  overflow: hidden;
+}
+
+/* 极淡的纸纹，只在信纸这层可见 */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------------- 信 ------------- */
+
+.page {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 40px 18px calc(40px + env(safe-area-inset-bottom));
+}
+
+.paper {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  padding: clamp(28px, 7.6vw, 40px) clamp(20px, 6.4vw, 36px)
+    clamp(74px, 15vw, 86px);
+  background: var(--card);
+  border: 1px solid rgba(44, 39, 35, 0.055);
+  border-radius: 16px;
+  box-shadow: 0 1px 1px rgba(44, 39, 35, 0.03),
+    0 10px 24px -18px rgba(44, 39, 35, 0.18),
+    0 30px 60px -42px rgba(44, 39, 35, 0.24);
+}
+
+/* 手写感的抬头 */
+.mark {
+  position: relative;
+  display: inline-block;
+  margin: 0 0 clamp(22px, 5.2vw, 28px);
+  transform-origin: 12% 85%;
+}
+
+.mark__text {
+  margin: 0;
+  font-size: clamp(23px, 6.9vw, 27px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.045em;
+  color: var(--ink);
+  transform: rotate(-1.3deg);
+  transform-origin: 8% 92%;
+}
+
+.mark__stroke {
+  position: absolute;
+  left: -5px;
+  bottom: -8px;
+  width: calc(100% + 12px);
+  height: 12px;
+  overflow: visible;
+  color: var(--red);
+  opacity: 0.5;
+}
+
+.mark__stroke path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-dasharray: 170;
+  stroke-dashoffset: 170;
+}
+
+/* 正文 */
+.msg p {
+  margin: 0 0 0.76em;
+  font-size: clamp(15.6px, 4.3vw, 17px);
+  line-height: 1.95;
+  letter-spacing: 0.012em;
+  color: var(--ink-body);
+  overflow-wrap: break-word;
+}
+
+.msg p:last-child {
+  margin-bottom: 0;
+}
+
+.sign {
+  margin: clamp(22px, 5.6vw, 30px) 0 0;
+  text-align: right;
+  font-size: 14.5px;
+  letter-spacing: 0.12em;
+  color: var(--ink-mute);
+}
+
+/* 小老鼠 */
+.mouse {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  width: 84px;
+  color: var(--ink-soft);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.mouse svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.mouse path,
+.mouse circle {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mouse .mouse__ear,
+.mouse .mouse__body {
+  fill: var(--card);
+}
+
+.mouse .mouse__earIn {
+  fill: #F0D2CA;
+  stroke: none;
+}
+
+.mouse .mouse__eye {
+  fill: currentColor;
+  stroke: none;
+}
+
+.mouse .mouse__nose {
+  fill: #C9544A;
+  stroke: none;
+}
+
+.mouse .mouse__whisker {
+  stroke-width: 1.8;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mouse__tail {
+    transform-origin: 24px 56px;
+    animation: tail-sway 5.4s ease-in-out infinite;
+  }
+
+  .mouse__eye {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: blink 7s steps(1, end) infinite;
+  }
+}
+
+@keyframes tail-sway {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-5deg);
+  }
+}
+
+@keyframes blink {
+  0%,
+  93%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.12);
+  }
+  97% {
+    transform: scaleY(1);
+  }
+}
+
+/* ---------------- 揭晓动画 ---------------- */
+
+html.js .paper {
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+
+html.js .paper.is-in {
+  opacity: 1;
+}
+
+html.js .mark {
+  opacity: 0;
+  transform: scale(1.05) translateY(6px);
+}
+
+html.js .msg p,
+html.js .sign {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+html.js .paper.is-in .mark {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.45s ease, transform 0.62s cubic-bezier(0.2, 0.75, 0.3, 1);
+}
+
+html.js .paper.is-in .mark__stroke path {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.85s cubic-bezier(0.4, 0.1, 0.3, 1) 0.32s;
+}
+
+html.js .paper.is-in .msg p,
+html.js .paper.is-in .sign {
+  opacity: 1;
+  transform: none;
+}
+
+/* 小老鼠最后才露面，像刚画上去的 */
+html.js .mouse {
+  opacity: 0;
+  transform: translateY(5px);
+}
+
+html.js .paper.is-in .mouse {
+  opacity: 0.9;
+  transform: none;
+  transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.2, 0.7, 0.3, 1);
+  transition-delay: 1.05s;
+}
+
+/* ---------------- 假页面：好友助力 ---------------- */
+
+.assist {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  color: #1F1B18;
+  transition: opacity 0.42s ease, transform 0.42s ease;
+}
+
+.assist.is-out {
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+}
+
+.assist[hidden] {
+  display: none;
+}
+
+.assist__bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+  height: calc(44px + env(safe-area-inset-top));
+  padding: env(safe-area-inset-top) 16px 0;
+  border-bottom: 1px solid #F2EDE7;
+}
+
+.assist__back {
+  margin-top: -3px;
+  font-size: 25px;
+  line-height: 1;
+}
+
+.assist__barTitle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.assist__dots {
+  margin-left: auto;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: #6B625A;
+}
+
+.assist__body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 16px;
+}
+
+.assist__col {
+  width: 100%;
+  max-width: 430px;
+  margin: auto auto;
+  padding: 12px 0 24px;
+}
+
+.assist__who {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 2px 16px;
+}
+
+.assist__ava {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #F4E8DD;
+  color: #A85B44;
+  font-size: 12px;
+}
+
+.assist__ava b {
+  font-weight: 500;
+}
+
+.assist__whoText {
+  font-size: 13px;
+  color: #6B625A;
+}
+
+.assist__whoText b {
+  color: #1F1B18;
+  font-weight: 600;
+}
+
+.assist__time {
+  margin-left: auto;
+  font-size: 12px;
+  color: #B6ADA4;
+}
+
+.assist__item {
+  display: flex;
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid #F2EDE7;
+  border-radius: 12px;
+}
+
+.assist__thumb {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  background: #FBF6EE;
+}
+
+.assist__thumb svg {
+  display: block;
+  width: 64px;
+  height: 64px;
+}
+
+.assist__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.assist__name {
+  margin: 2px 0 0;
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #1F1B18;
+}
+
+.assist__sub {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #A79E95;
+}
+
+.assist__price {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: auto 0 0;
+  color: var(--red);
+}
+
+.assist__price i {
+  font-style: normal;
+  font-size: 12px;
+}
+
+.assist__price b {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.assist__price s {
+  font-size: 11.5px;
+  color: #BBB2A9;
+}
+
+.assist__prog {
+  margin-top: 18px;
+}
+
+.assist__progRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 12.5px;
+  color: #6B625A;
+}
+
+.assist__gap {
+  color: var(--red);
+}
+
+.assist__gap b {
+  font-weight: 700;
+}
+
+.assist__track {
+  height: 6px;
+  border-radius: 3px;
+  background: #F4EFE8;
+  overflow: hidden;
+}
+
+.assist__track i {
+  display: block;
+  width: 98%;
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #E8704B, #D2402E);
+  transition: width 0.6s cubic-bezier(0.3, 0.8, 0.4, 1);
+}
+
+.assist.is-cutting .assist__track i {
+  width: 100%;
+}
+
+.assist__helped {
+  margin: 9px 0 0;
+  font-size: 11.5px;
+  color: #B6ADA4;
+}
+
+.assist__btn {
+  display: block;
+  width: 100%;
+  height: 48px;
+  margin-top: 22px;
+  border: 0;
+  border-radius: 11px;
+  background: linear-gradient(180deg, #E04B35, #CE3823);
+  color: #fff;
+  font-family: inherit;
+  font-size: 16.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  box-shadow: 0 8px 18px -11px rgba(206, 56, 35, 0.8);
+  touch-action: manipulation;
+  transition: transform 0.12s ease, opacity 0.2s ease;
+}
+
+.assist__btn:active {
+  transform: scale(0.985);
+}
+
+.assist.is-cutting .assist__btn {
+  opacity: 0.9;
+}
+
+/* 停一会儿之后按钮轻轻“呼吸”一下，像在催她点 */
+@media (prefers-reduced-motion: no-preference) {
+  .assist__btn {
+    animation: btn-breathe 2.6s ease-in-out 1.4s infinite;
+  }
+
+  .assist.is-cutting .assist__btn {
+    animation: none;
+  }
+}
+
+@keyframes btn-breathe {
+  0%,
+  100% {
+    box-shadow: 0 8px 18px -11px rgba(206, 56, 35, 0.8);
+  }
+  50% {
+    box-shadow: 0 11px 26px -9px rgba(206, 56, 35, 0.95);
+  }
+}
+
+.assist__note {
+  margin: 10px 0 0;
+  text-align: center;
+  font-size: 11.5px;
+  color: #B6ADA4;
+}
+
+.assist__rules {
+  margin-top: 30px;
+  padding-top: 18px;
+  border-top: 1px dashed #F0EAE2;
+  color: #B6ADA4;
+  font-size: 11.5px;
+  line-height: 1.95;
+}
+
+.assist__rules p {
+  margin: 0;
+}
+
+.assist__rules .assist__rulesTitle {
+  margin-bottom: 6px;
+  color: #9A9089;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+/* 助力成功 */
+.toast {
+  position: fixed;
+  left: 50%;
+  top: calc(64px + env(safe-area-inset-top));
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 18px;
+  border-radius: 999px;
+  background: rgba(31, 27, 24, 0.92);
+  color: #fff;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transform: translate(-50%, -8px);
+  pointer-events: none;
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.toast.is-on {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.toast svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: #93D6AC;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------------- 兜底 & 适配 ---------------- */
+
+html.no-js .assist {
+  display: none !important;
+}
+
+html.no-js #letter {
+  display: none;
+}
+
+html.no-js noscript .msg p,
+html.no-js noscript .sign,
+html.no-js noscript .mark {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 359px) {
+  .mouse {
+    right: 18px;
+    bottom: 12px;
+    width: 70px;
+  }
+}
+
+@media (min-width: 600px) {
+  .assist {
+    background: #F7F4EF;
+  }
+
+  .assist__col {
+    padding: 22px 22px 26px;
+    background: #fff;
+    border: 1px solid #EFEAE3;
+    border-radius: 14px;
+    box-shadow: 0 12px 34px -26px rgba(44, 39, 35, 0.35);
+  }
+
+  .page {
+    padding: 64px 24px;
+  }
+
+  .paper {
+    padding: 46px 44px 58px;
+    border-radius: 18px;
+  }
+
+  .msg p {
+    font-size: 17px;
+    line-height: 2;
+  }
+
+  .mark__text {
+    font-size: 29px;
+  }
+
+  .mouse {
+    right: 22px;
+    bottom: 16px;
+    width: 86px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0s !important;
+  }
+
+  html.js .msg p,
+  html.js .sign,
+  html.js .mark {
+    opacity: 1;
+    transform: none;
+  }
+
+  html.js .paper.is-in .mark__stroke path {
+    stroke-dashoffset: 0;
+  }
+}
